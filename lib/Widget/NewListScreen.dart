@@ -9,7 +9,7 @@ class NewListScreen extends StatefulWidget {
 
 class _NewListScreenState extends State<NewListScreen> {
   final TextEditingController _nameController = TextEditingController();
-  List<String> selectedItems = [];
+  List<Map<String, dynamic>> selectedItems = []; // Giữ nguyên kiểu dữ liệu
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +31,8 @@ class _NewListScreenState extends State<NewListScreen> {
                     itemCount: items.length,
                     itemBuilder: (context, index) {
                       return CheckboxListTile(
-                        title: Text(items[index]),
+                        title: Text(items[index]['FullName']),
+                        subtitle: Text('${items[index]['bidPrice3']} | ${items[index]['bidVol3']}'), // Hiển thị bidPrice3 và bidVol3
                         value: selectedItems.contains(items[index]),
                         onChanged: (bool? value) {
                           setState(() {
@@ -48,17 +49,19 @@ class _NewListScreenState extends State<NewListScreen> {
                 },
               ),
             ),
+        // Trong NewListScreen
             ElevatedButton(
               onPressed: () {
+                // Lưu danh sách selectedItems vào SharedPreferences
                 Provider.of<ListProvider>(context, listen: false).saveList(
                   _nameController.text,
-                  selectedItems,
+                  selectedItems, // Truyền selectedItems trực tiếp
                 );
                 Navigator.pop(context);
               },
               child: Text('Xác nhận'),
             ),
-          ],
+        ],
         ),
       ),
     );
