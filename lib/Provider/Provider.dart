@@ -11,13 +11,24 @@ class ListProvider extends ChangeNotifier {
   final SocketService _socketService = SocketService();
 
   ListProvider() {
-    _socketService.connect();
+    _socketService.connect((data) {
+      updateItemPrices(data);
+    });
     loadAvailableItems();
     loadSavedList();
-    _socketService.socket!.on('updateItems', (data) {
-      availableItems = List<Map<String, dynamic>>.from(data);
-      notifyListeners();
-    });
+  }
+
+  void updateItemPrices(dynamic data) {
+    // Assuming data is a list of items with updated prices
+    for (var updatedItem in data) {
+      for (var item in availableItems) {
+        if (item['FullName'] == updatedItem['FullName']) {
+          item['bidPrice3'] = updatedItem['bidPrice3'];
+          item['bidVol3'] = updatedItem['bidVol3'];
+        }
+      }
+    }
+    notifyListeners();
   }
 
   void loadAvailableItems() async {
