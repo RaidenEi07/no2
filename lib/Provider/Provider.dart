@@ -33,13 +33,20 @@ class ListProvider extends ChangeNotifier {
 
   void loadAvailableItems() async {
     try {
-      final response = await Dio().get('http://192.168.1.7:3000/stocks');
+      final response = await Dio().get('https://priceapi.bsc.com.vn/datafeed/instruments?symbols=');
       print('Response data: ${response.data}');
-      availableItems = List<Map<String, dynamic>>.from(response.data.map((stock) => {
-        'FullName': stock['FullName'],
-        'bidPrice3': stock['bidPrice3'],
-        'bidVol3': stock['bidVol3'],
-      }));
+
+      // Assuming the response structure is as provided
+      if (response.data['s'] == 'ok') {
+        availableItems = List<Map<String, dynamic>>.from(response.data['d'].map((stock) => {
+          'FullName': stock['FullName'],
+          'bidPrice3': stock['bidPrice3'],
+          'bidVol3': stock['bidVol3'],
+        }));
+      } else {
+        print('Error: ${response.data['em']}');
+      }
+
       notifyListeners();
     } catch (e) {
       print('Error fetching items: $e');

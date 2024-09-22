@@ -4,6 +4,7 @@ import 'package:no2/Widget/SelectionRow.dart';
 import 'package:no2/Widget/BarStock.dart';
 import 'package:no2/Widget/SortButtonRow.dart';
 import 'package:no2/Widget/SavedListScreen.dart';
+import 'package:no2/Widget/Footer.dart';
 
 class MyHomePage extends StatelessWidget {
   @override
@@ -20,18 +21,11 @@ class MyHomePage extends StatelessWidget {
             SizedBox(height: 10),
             SelectableButtonsRow(),
             SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => SavedListScreen()),
-                );
-              },
-              child: Text('Xem danh sách đã lưu'),
-            ),
+            Expanded(child: SavedListScreen()),
           ],
         ),
       ),
+      bottomNavigationBar: CustomFooter(),
     );
   }
 }

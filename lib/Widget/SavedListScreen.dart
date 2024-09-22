@@ -8,16 +8,15 @@ class SavedListScreen extends StatelessWidget {
     final savedItems = Provider.of<ListProvider>(context).savedItems;
 
     return Scaffold(
-      appBar: AppBar(title: Text('Danh sách đã lưu')),
-      backgroundColor: Colors.white,
+      backgroundColor: Color(0xFF23272A),
       body: savedItems.isEmpty
           ? Center(child: Text('Chưa có danh sách nào được lưu'))
           : ListView.builder(
         itemCount: savedItems.length,
         itemBuilder: (context, index) {
           return ListTile(
-            title: Text(savedItems[index]['FullName']),
-            subtitle: Text('${savedItems[index]['bidPrice3']} | ${savedItems[index]['bidVol3']}'), // Hiển thị bidPrice3 và bidVol3
+            title: Text(savedItems[index]['FullName'], style: TextStyle(color: Colors.white)),
+            subtitle: Text('${savedItems[index]['bidPrice3']} | ${savedItems[index]['bidVol3']}',style: TextStyle(color: Colors.white54)), // Hiển thị bidPrice3 và bidVol3
           );
         },
       ),
