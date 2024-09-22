@@ -31,8 +31,8 @@ class _NewListScreenState extends State<NewListScreen> {
                     itemCount: items.length,
                     itemBuilder: (context, index) {
                       return CheckboxListTile(
-                        title: Text(items[index]['FullName']),
-                        subtitle: Text('${items[index]['bidPrice3']} | ${items[index]['bidVol3']}'), // Hiển thị bidPrice3 và bidVol3
+                        title: Text('${items[index]['symbol']} | ${items[index]['exchange']}'),
+                        subtitle: Text(items[index]['FullName']), // Hiển thị bidPrice3 và bidVol3
                         value: selectedItems.contains(items[index]),
                         onChanged: (bool? value) {
                           setState(() {

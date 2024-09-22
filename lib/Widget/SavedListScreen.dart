@@ -15,8 +15,8 @@ class SavedListScreen extends StatelessWidget {
         itemCount: savedItems.length,
         itemBuilder: (context, index) {
           return ListTile(
-            title: Text(savedItems[index]['FullName'], style: TextStyle(color: Colors.white)),
-            subtitle: Text('${savedItems[index]['bidPrice3']} | ${savedItems[index]['bidVol3']}',style: TextStyle(color: Colors.white54)), // Hiển thị bidPrice3 và bidVol3
+            title: Text('${savedItems[index]['symbol']} | ${savedItems[index]['exchange']}', style: TextStyle(color: Colors.white),),
+            subtitle: Text(savedItems[index]['FullName'], style: TextStyle(color: Colors.white30)),// Hiển thị bidPrice3 và bidVol3
           );
         },
       ),

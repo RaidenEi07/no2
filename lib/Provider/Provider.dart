@@ -23,8 +23,8 @@ class ListProvider extends ChangeNotifier {
     for (var updatedItem in data) {
       for (var item in availableItems) {
         if (item['FullName'] == updatedItem['FullName']) {
-          item['bidPrice3'] = updatedItem['bidPrice3'];
-          item['bidVol3'] = updatedItem['bidVol3'];
+          item['symbol'] = updatedItem['symbol']; // Đổi bidPrice3 thành symbol
+          item['exchange'] = updatedItem['exchange']; // Đổi bidVol3 thành exchange
         }
       }
     }
@@ -40,8 +40,8 @@ class ListProvider extends ChangeNotifier {
       if (response.data['s'] == 'ok') {
         availableItems = List<Map<String, dynamic>>.from(response.data['d'].map((stock) => {
           'FullName': stock['FullName'],
-          'bidPrice3': stock['bidPrice3'],
-          'bidVol3': stock['bidVol3'],
+          'symbol': stock['symbol'], // Đổi bidPrice3 thành symbol
+          'exchange': stock['exchange'], // Đổi bidVol3 thành exchange
         }));
       } else {
         print('Error: ${response.data['em']}');
