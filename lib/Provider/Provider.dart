@@ -44,12 +44,12 @@ class ListProvider extends ChangeNotifier {
       if (response.data['s'] == 'ok') {
         availableItems = List<Map<String, dynamic>>.from(response.data['d'].map((stock) => {
           'FullName': stock['FullName'],
-          'symbol': stock['symbol'],
+          'symbol': stock['symbol'], // Đổi bidPrice3 thành symbol
           'exchange': stock['exchange'],
-          'closePrice': stock['closePrice'] ?? 0, // Gán giá trị mặc định nếu null
-          'change': stock['change'] ?? 0, // Gán giá trị mặc định nếu null
-          'totalTrading': stock['totalTrading'] ?? 0, // Gán giá trị mặc định nếu null
-          'changePercent': stock['changePercent'] ?? 0, // Gán giá trị mặc định nếu null
+          'closePrice': stock['closePrice'],
+          'change': stock['change'],
+          'totalTrading': stock['totalTrading'],
+          'changePercent': stock['changePercent'],
         }));
       } else {
         print('Error: ${response.data['em']}');
@@ -69,19 +69,10 @@ class ListProvider extends ChangeNotifier {
     String? savedItemsJson = prefs.getString('savedItems');
     if (savedItemsJson != null) {
       List<dynamic> decodedList = jsonDecode(savedItemsJson);
-      savedItems = List<Map<String, dynamic>>.from(decodedList.map((item) => {
-        'FullName': item['FullName'],
-        'symbol': item['symbol'],
-        'exchange': item['exchange'],
-        'closePrice': item['closePrice'] ?? 0,
-        'change': item['change'] ?? 0,
-        'totalTrading': item['totalTrading'] ?? 0,
-        'changePercent': item['changePercent'] ?? 0,
-      }));
+      savedItems = List<Map<String, dynamic>>.from(decodedList);
     } else {
       savedItems = [];
     }
-
     notifyListeners();
   }
 
@@ -112,5 +103,10 @@ class ListProvider extends ChangeNotifier {
   void dispose() {
     _socketService.disconnect();
     super.dispose();
+  }
+
+  void sortSavedItems() {
+    savedItems.sort((a, b) => a['symbol'].compareTo(b['symbol']));
+    notifyListeners();
   }
 }

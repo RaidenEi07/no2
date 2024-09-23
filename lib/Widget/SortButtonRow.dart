@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:no2/Provider/Provider.dart';
 
 class SelectableButtonsRow extends StatefulWidget {
   @override
@@ -14,13 +16,12 @@ class _SelectableButtonsRowState extends State<SelectableButtonsRow> {
     setState(() {
       if (button == 'A-Z') {
         _isSelectedAtoZ = !_isSelectedAtoZ;
-        _isSelectedZtoA = false;
-        _isSelectedRecent = false;
-      } else if (button == 'Z-A') {
+        Provider.of<ListProvider>(context, listen: false).sortSavedItems();
+      } else if (button == 'Giá') {
         _isSelectedZtoA = !_isSelectedZtoA;
         _isSelectedAtoZ = false;
         _isSelectedRecent = false;
-      } else if (button == 'Recent') {
+      } else if (button == 'Khối lượng') {
         _isSelectedRecent = !_isSelectedRecent;
         _isSelectedAtoZ = false;
         _isSelectedZtoA = false;
